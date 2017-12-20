@@ -1,0 +1,198 @@
+@import "fonts.css";
+
+@media (min-width: 1px) {
+    .header {
+        background: transparent;
+    }
+
+    .menu-child {
+        padding: 12px 0 0;
+        position: relative;
+        display: block;
+    }
+
+    .logo {
+        background: #ec008c;
+        padding: 20px 24px;
+        display: block;
+    }
+
+    .logo .logo-text {
+        left: -100%;
+        -webkit-transition: all 0.5s ease;
+        transition: all 0.5s ease;
+    }
+
+    .logo .show {
+        left: 0;
+        -webkit-transition: all 0.5s ease;
+        transition: all 0.5s ease;
+    }
+
+    .hamburguer {
+        left: -100%;
+        -webkit-transition: all 0.5s ease;
+        transition: all 0.5s ease;
+    }
+
+    .hamburguer.show {
+        left: 0;
+    }
+
+    .close {
+        left: -100%;
+        -webkit-transition: all 0.5s ease;
+        transition: all 0.2s ease;
+    }
+
+    .close.show {
+        left: 0;
+        float: right;
+    }
+
+    .header > .menu-list {
+        left: -100%;
+        position: relative;
+        display: block;
+        padding: 0;
+        margin: 0;
+        max-width: 70%;
+        -webkit-transition: all 0.5s ease;
+        transition: all 0.5s ease;
+
+    }
+
+    .header > .menu-list.active {
+        left: 0;
+    }
+
+    .icon-chevron-down::after,
+    .icon-chevron-left::after,
+    .icon-chevron-right::after,
+    .icon-chevron-up::after {
+        display: block;
+        position: absolute;
+        top: 7px;
+        right: 10px;
+        color: #ec008c;
+        font-size: 1.5em;
+    }
+
+    .menu-child:hover {
+        background: #eee;
+    }
+
+    .menu-child .menu-list {
+        position: relative;
+        display: none;
+        top: inherit;
+        background: #FFF;
+        margin: 0;
+        padding: 0;
+        font-family: 'Galaxie';
+        font-size: 0.7em;
+    }
+
+    .menu-list.open {
+        display: block;
+    }
+
+    .menu-link-elem {
+        padding: 0 12px 12px;
+    }
+}
+
+@media (min-width:769px) {
+    .close {
+        display: none;
+    }
+    .header {
+        background: #ec008c;
+    }
+
+    .logo {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .logo .hamburguer {
+        left: -100%;
+    }
+
+    .logo .logo-text {
+        display: inline-block;
+        left: 0;
+    }
+
+    .header > .menu-list {
+        left: 0;
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .menu-child {
+        display: inline-block;
+        padding: 28px 10px;
+        position: relative;
+    }
+
+    .menu-link-elem {
+        color: #FFF;
+    }
+
+    .icon-chevron-down:after {
+        display: none;
+    }
+
+    .menu-child .menu-list {
+        position: absolute;
+        top: 100%;
+        left: 0;
+    }
+
+    .menu-child .menu-list .menu-link-elem{
+        color: #000;
+        padding: 0;
+    }
+
+    .menu-child .menu-list .menu-child {
+        display: block; 
+    }
+}
+
+body {
+  /*background: #ec008c;
+  color: #fff;*/
+  margin: 0;
+}
+
+.header {
+    font-family: 'HUGEAvantGardeBold';
+    display: block;
+}
+
+.logo {
+    color: #FFF;
+}
+
+.menu-list {
+    list-style: none;
+}
+
+.menu-link-elem {
+    text-decoration: none;
+    color: #000; 
+}
+
+.menu-child .menu-list{
+    -webkit-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+.logo,
+.logo-text,
+.hamburguer,
+.close {
+    position: relative;
+    /*display: inline-block;*/
+}
