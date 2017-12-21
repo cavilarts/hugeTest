@@ -11,10 +11,12 @@
 
     .menu-link-elem {
         color: #000;
+        text-decoration: none;
+        display: block;
     }
 
     .menu-child {
-        padding: 12px 0;
+        padding: 12px 0 0;
         position: relative;
         display: block;
     }
