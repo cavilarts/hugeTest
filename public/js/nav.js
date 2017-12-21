@@ -182,7 +182,10 @@ NavCreator.prototype.toggleShowClass = function(evt) {
 * @evt {Object} 
 */
 NavCreator.prototype.openSubMenu = function(evt) {
-    this.resetMenuElems();
+
+    if (document.body.clientWidth > 768) {
+        this.resetMenuElems();
+    }
 
     if (evt.target.href) {
         evt.preventDefault();
