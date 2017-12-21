@@ -1,14 +1,23 @@
 'use strict';
 
+/**
+* Constructor method
+*/
 const NavCreator = function() {
     this.setRequester();
     this.setConstants();
 };
 
+/**
+* @setRequester Set new instance of XMLHttpRequest
+*/
 NavCreator.prototype.setRequester = function() {
     this.requester = new XMLHttpRequest();
 };
 
+/**
+* @setConstants CONSTANTS Object
+*/
 NavCreator.prototype.setConstants = function() {
     this.CONSTANTS = {
         "URL": "/api/nav.json",
@@ -23,12 +32,18 @@ NavCreator.prototype.setConstants = function() {
     };
 }
 
+/**
+* @init Class initializer
+*/
 NavCreator.prototype.init = function() {
     this.bindEvents();
     this.openRequester();
     this.fetch();
 };
 
+/**
+* @bindEvents binding for XMLHttpRequest
+*/
 NavCreator.prototype.bindEvents = function() {
     this.requester.addEventListener(
         this.CONSTANTS.EVENTS.LOAD,
@@ -40,24 +55,40 @@ NavCreator.prototype.bindEvents = function() {
     );
 }
 
+/**
+* @openRequester XMLHttpRequest open handler with method and URL
+*/
 NavCreator.prototype.openRequester = function() {
     this.requester.open(this.CONSTANTS.METHOD, this.CONSTANTS.URL);
 };
 
+/**
+* @fetch XMLHttpRequest send handler
+*/
 NavCreator.prototype.fetch = function() {
     this.requester.send();
 };
 
+/**
+* @handleResponse handler of XMLHttpRequest response
+*/
 NavCreator.prototype.handleResponse = function(response) {
     if (this.requester.readyState === XMLHttpRequest.DONE) {
         this.buildMenu(JSON.parse(this.requester.responseText));
     }
 };
 
+/**
+* @handleError handler of XMLHttpRequest error
+*/
 NavCreator.prototype.handleError = function(evt) {
     console.warn("An error ocurred getting the data" + evt);
 };
 
+/**
+* @buildMenu menu constructor
+* @items {Object} 
+*/
 NavCreator.prototype.buildMenu = function(items) {
     var header = document.getElementsByClassName(this.CONSTANTS.SELECTORS.HEADER)[0],
         menu = this.createMenuItems(items.items);
@@ -66,6 +97,10 @@ NavCreator.prototype.buildMenu = function(items) {
     this.bindUiEvents();
 };
 
+/**
+* @createMenuItems dom list creator
+* @nodesObj {Array} 
+*/
 NavCreator.prototype.createMenuItems = function(nodesObj) {
     var menu = document.createElement('ul'),
         node,
@@ -84,6 +119,10 @@ NavCreator.prototype.createMenuItems = function(nodesObj) {
     return menu;
 }
 
+/**
+* @createLeaf recursive definition of node and leaf
+* @options {Array|Object} 
+*/
 NavCreator.prototype.createLeaf = function(options) {
     var leaf = document.createElement('li'),
         anchore = document.createElement('a'),
@@ -108,42 +147,47 @@ NavCreator.prototype.createLeaf = function(options) {
     return leaf;
 };
 
+/**
+* @bindUiEvents bind ui events
+*/
 NavCreator.prototype.bindUiEvents = function() {
-    var hamburger = document.querySelector(".hamburguer"),
-        mainList = document.getElementsByClassName('menu-list')[0],
-        closeBtn = document.querySelector(".close"),
+    var toggleMenu = document.querySelector(".toggle-menu"),
         menuElements = document.getElementsByClassName('icon-chevron-down');
 
-    hamburger.addEventListener('click', this.toggleShowClass);
-    closeBtn.addEventListener('click', this.toggleShowClass);
-
+    toggleMenu.addEventListener('click', this.toggleShowClass);
+debugger
     for (var i = 0, len = menuElements.length; i < len; i++) {
         menuElements[i].addEventListener('click', this.openSubMenu);
     }
 }
 
+/**
+* @bindUiEvents activate / deactivate classes to display / hide elements
+* @evt {Object} 
+*/
 NavCreator.prototype.toggleShowClass = function(evt) {
-    var logo = evt.target.parentElement.querySelector('.logo-text'),
-        menu = evt.target.parentElement.parentElement.querySelector('.menu-list');
+    var logoWrapper = document.querySelector('.logo-wrapper'),
+        navMenu = document.querySelector('.menu-list'),
+        content = document.querySelector('.content'),
+        overlay = document.querySelector('.overlay');
 
-    evt.target.classList.remove('show');
-
-    if (evt.target.className === 'hamburguer icon-menu') {
-        logo.classList.add('show');
-        menu.classList.add('active');
-        evt.target.parentElement.querySelector('.close').classList.add('show');
-    } else {
-        logo.classList.remove('show');
-        menu.classList.remove('active');
-        evt.target.parentElement.querySelector('.hamburguer').classList.add('show');
-    }
+    logoWrapper.classList.toggle('open');
+    navMenu.classList.toggle('active');
+    overlay.classList.toggle('active');
+    content.classList.toggle('menu-open');
 }
 
+/**
+* @bindUiEvents toggle open class for sub menu elements
+* @evt {Object} 
+*/
 NavCreator.prototype.openSubMenu = function(evt) {
-    if (evt.target.href) {
+    if (evt.target.href) {debugger
         evt.preventDefault();
+        evt.target.parentElement.classList.toggle('active');
         evt.target.parentElement.querySelector('.menu-list').classList.toggle('open')
     } else {
+        evt.target.classList.toggle('active');
         evt.target.querySelector('.menu-list').classList.toggle('open');
     }
 }

@@ -60,3 +60,7 @@
   font-family: 'icomoon' !important;
   content: "\e904";
 }
+
+.icon-close:before {
+  content: "\e5cd";
+}
