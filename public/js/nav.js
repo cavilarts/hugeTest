@@ -155,9 +155,9 @@ NavCreator.prototype.bindUiEvents = function() {
         menuElements = document.getElementsByClassName('icon-chevron-down');
 
     toggleMenu.addEventListener('click', this.toggleShowClass);
-debugger
+
     for (var i = 0, len = menuElements.length; i < len; i++) {
-        menuElements[i].addEventListener('click', this.openSubMenu);
+        menuElements[i].addEventListener('click', this.openSubMenu.bind(this));
     }
 }
 
@@ -182,12 +182,27 @@ NavCreator.prototype.toggleShowClass = function(evt) {
 * @evt {Object} 
 */
 NavCreator.prototype.openSubMenu = function(evt) {
-    if (evt.target.href) {debugger
+    this.resetMenuElems();
+
+    if (evt.target.href) {
         evt.preventDefault();
         evt.target.parentElement.classList.toggle('active');
         evt.target.parentElement.querySelector('.menu-list').classList.toggle('open')
     } else {
         evt.target.classList.toggle('active');
         evt.target.querySelector('.menu-list').classList.toggle('open');
+    }
+}
+
+NavCreator.prototype.resetMenuElems = function() {
+    var menuElems = document.getElementsByClassName('menu-list '),
+        menuChildren = document.getElementsByClassName('menu-child');
+
+    for (var i = 0, len = menuElems.length; i < len; i++) {
+        menuElems[i].classList.remove('open');
+    }
+
+    for (var i = 0, len = menuChildren.length; i < len; i++) {
+        menuChildren[i].classList.remove('active');
     }
 }
