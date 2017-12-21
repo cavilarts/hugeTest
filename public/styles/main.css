@@ -291,6 +291,7 @@
         position: absolute;
         top: 100%;
         margin-left: -10px;
+        min-width: 100px;
     }
 
     .menu-child .menu-list .menu-link-elem{
