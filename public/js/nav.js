@@ -91,9 +91,11 @@ NavCreator.prototype.handleError = function(evt) {
 */
 NavCreator.prototype.buildMenu = function(items) {
     var header = document.getElementsByClassName(this.CONSTANTS.SELECTORS.HEADER)[0],
+        nav = document.createElement('nav'),
         menu = this.createMenuItems(items.items);
 
-    header.appendChild(menu);
+    nav.appendChild(menu)
+    header.appendChild(nav);
     this.bindUiEvents();
 };
 
@@ -156,6 +158,16 @@ NavCreator.prototype.bindUiEvents = function() {
 
     toggleMenu.addEventListener('click', this.toggleShowClass);
 
+    window.addEventListener('click', function(e){
+        if (!document.querySelector('.header').contains(e.target)){
+            document.querySelector('.logo-wrapper').classList.remove('open');
+            document.querySelector('.content').classList.remove('menu-open');
+            document.querySelector('.overlay').classList.remove('active');
+            document.querySelector('.menu-list').classList.remove('active');
+            this.resetMenuElems();
+        }
+    }.bind(this));
+
     for (var i = 0, len = menuElements.length; i < len; i++) {
         menuElements[i].addEventListener('click', this.openSubMenu.bind(this));
     }
@@ -168,13 +180,16 @@ NavCreator.prototype.bindUiEvents = function() {
 NavCreator.prototype.toggleShowClass = function(evt) {
     var logoWrapper = document.querySelector('.logo-wrapper'),
         navMenu = document.querySelector('.menu-list'),
-        content = document.querySelector('.content'),
-        overlay = document.querySelector('.overlay');
+        content = document.querySelector('.content');
 
+    document.querySelector('.overlay').classList.add('active')
     logoWrapper.classList.toggle('open');
     navMenu.classList.toggle('active');
-    overlay.classList.toggle('active');
     content.classList.toggle('menu-open');
+}
+
+NavCreator.prototype.openOverlay = function() {
+    document.querySelector('.overlay').classList.toggle('active')
 }
 
 /**
@@ -187,10 +202,12 @@ NavCreator.prototype.openSubMenu = function(evt) {
         this.resetMenuElems();
     }
 
+     document.querySelector('.overlay').classList.add('active')
+
     if (evt.target.href) {
         evt.preventDefault();
         evt.target.parentElement.classList.toggle('active');
-        evt.target.parentElement.querySelector('.menu-list').classList.toggle('open')
+        evt.target.parentElement.querySelector('.menu-list').classList.toggle('open');
     } else {
         evt.target.classList.toggle('active');
         evt.target.querySelector('.menu-list').classList.toggle('open');
